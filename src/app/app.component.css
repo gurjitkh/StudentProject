@@ -1,0 +1,45 @@
+:host {
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: center;
+}
+
+form {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 33px;
+  text-align: center;
+
+}
+
+section {
+  display: table;
+}
+
+.mat-form-field {
+  display: block !important;
+}
+
+table {
+  width: 100%;
+}
+
+th.mat-header-cell {
+  text-align: center !important;
+}
+
+.example-button-row {
+  display: table-cell;
+  width: 490px;
+}
+
+button.mat-focus-indicator.mat-raised-button.mat-button-base.mat-warn {
+  margin: 8px 8px 8px 0 !important;
+}
+
+th.mat-header-cell.cdk-header-cell {
+  text-transform: uppercase !important;
+  font-weight: bold;
+}

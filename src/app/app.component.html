@@ -1,0 +1,130 @@
+<div style="text-align: right;width:98%;margin-top:10px;">
+  <button mat-raised-button color="primary" *ngIf="!isAdding" (click)="enableAdding()">Add Student Record</button>
+</div>
+<h1 style="margin-left:20px" *ngIf="!isAdding">Students Details</h1>
+<table mat-table [dataSource]="dataSource" *ngIf="!isAdding" class="mat-elevation-z6">
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> name </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dob">
+    <th mat-header-cell *matHeaderCellDef> dob </th>
+    <td mat-cell *matCellDef="let element"> {{element.dob}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="semester">
+    <th mat-header-cell *matHeaderCellDef> semester </th>
+    <td mat-cell *matCellDef="let element"> {{element.sem}} </td>
+  </ng-container>
+  <ng-container matColumnDef="course">
+    <th mat-header-cell *matHeaderCellDef> course </th>
+    <td mat-cell *matCellDef="let element"> {{element.course}} </td>
+  </ng-container>
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef> description </th>
+    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<form (ngSubmit)="save()" *ngIf="isAdding">
+  <mat-card>
+    <h1>Student Form</h1>
+    <mat-form-field appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="name" name="name" [formControl]="nameCtrl">
+      <mat-error *ngIf="nameCtrl.hasError('required')">
+        <span>
+          Please enter name
+        </span>
+      </mat-error>
+      <mat-error *ngIf="nameCtrl.hasError('minlength')">
+        <span>
+          Name can not be less then 3 digits
+        </span>
+      </mat-error>
+      <mat-error *ngIf="nameCtrl.hasError('maxlength')">
+        <span>
+          Name can not be more then 20 digits
+        </span>
+      </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Choose your date of birth</mat-label>
+      <input matInput [matDatepicker]="picker" [max]="maxDate" [(ngModel)]="dob" name="dob" [formControl]="dobCtrl">
+      <mat-error *ngIf="nameCtrl.hasError('required')">
+        <span>
+          Please select DOB
+        </span>
+      </mat-error>
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Select semester</mat-label>
+      <mat-select [(ngModel)]="sem" name="sem" [formControl]="semCtrl">
+        <mat-option value="First">First Semester</mat-option>
+        <mat-option value="Second">Second Semester</mat-option>
+        <mat-option value="Third">Third Semester</mat-option>
+        <mat-option value="Fourth">Fourth Semester</mat-option>
+      </mat-select>
+      <mat-error *ngIf="nameCtrl.hasError('required')">
+        <span>
+          Please select Semester
+        </span>
+      </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Enrolled Courses</mat-label>
+      <mat-select matInput [formControl]="courseCtrl" multiple [(ngModel)]="course" name="course">
+        <mat-option *ngFor="let course of courseList" [value]="course">{{course}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="courseCtrl.hasError('required')">
+        <span>
+          Please select course
+        </span>
+      </mat-error>
+    </mat-form-field>
+    <br />
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput [(ngModel)]="description" name="description" [formControl]="descriptionCtrl"></textarea>
+      <mat-error *ngIf="nameCtrl.hasError('required')">
+        <span>
+          Please enter description
+        </span>
+      </mat-error>
+      <mat-error *ngIf="nameCtrl.hasError('minlength')">
+        <span>
+          Description can not be less then 3 digits
+        </span>
+      </mat-error>
+      <mat-error *ngIf="nameCtrl.hasError('maxlength')">
+        <span>
+          Description can not be more then 35 digits
+        </span>
+      </mat-error>
+    </mat-form-field>
+    <br>
+
+    <section>
+      <div class="example-button-row">
+        <button mat-raised-button color="warn" (click)="enableAdding()">Cancel</button>
+        <button mat-raised-button color="primary" type="submit">Save</button>
+      </div>
+    </section>
+
+  </mat-card>
+</form>
+
+
+<router-outlet></router-outlet>
